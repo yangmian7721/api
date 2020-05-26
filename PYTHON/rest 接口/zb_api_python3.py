@@ -2,6 +2,7 @@
 
 import json, hashlib,struct,time,sys
 import urllib.request
+import io
 
 class zb_api:
 	
@@ -60,7 +61,8 @@ class zb_api:
             url = 'https://trade.zb.com/api/' + path + '?' + params
             req = urllib.request.Request(url)
             res = urllib.request.urlopen(req, timeout=2)
-            doc = json.loads(res.read())
+            resu = io.TextIOWrapper(res, encoding='utf-8') 
+            doc = json.loads(resu.read())
             return doc
         except Exception as ex:
             print(sys.stderr, 'zb request ex: ', ex)
